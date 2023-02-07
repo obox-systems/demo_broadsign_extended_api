@@ -1,0 +1,20 @@
+[package]
+name = "broadsign_extended_api"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+path = "src/main.rs"
+name = "broadsign_extended_api"
+
+[dependencies]
+actix = "0.13.0"
+actix-web = "4.3.0"
+awc = "3.1.0"
+futures = "0.3.26"
+futures-util = "0.3.26"
+reqwest = { version = "0.11.14", features = ["stream"] }
+tokio = { version = "1.25.0", features = ["full"] }
