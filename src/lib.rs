@@ -1,3 +1,9 @@
+#![warn(rust_2018_idioms)]
+#![warn(missing_debug_implementations)]
+#![warn(missing_docs)]
+
+//! This project was meant to be a middleman between two APIs.
+
 use std::{error::Error, net::TcpListener};
 
 use actix_web::{
@@ -61,6 +67,7 @@ async fn player(req: HttpRequest, mut payload: Payload) -> HttpResponse {
   HttpResponse::SwitchingProtocols().streaming(rx)
 }
 
+/// Binds to the address and serves the middleware.
 pub fn run(listener: TcpListener) -> Result<Server, Box<dyn Error>> {
   let server = HttpServer::new(move || {
     App::new()
