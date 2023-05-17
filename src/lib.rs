@@ -26,10 +26,14 @@ async fn player(req: HttpRequest, mut payload: Payload) -> HttpResponse {
   let client = awc::Client::new().ws(url);
   let client = if let Some(key) = req.headers().get("sec-websocket-key") {
     client.set_header("sec-websocket-key", key)
-  } else { client };
+  } else {
+    client
+  };
   let client = if let Some(key) = req.headers().get("sec-websocket-version") {
     client.set_header("sec-websocket-version", key)
-  } else { client };
+  } else {
+    client
+  };
   let (res, socket) = client
     .server_mode()
     .connect()
@@ -73,7 +77,7 @@ pub fn run(listener: TcpListener) -> Result<Server, Box<dyn Error>> {
     App::new()
       .service(web::resource(BROADSIGN_PREFIX).to(player))
       .service(web::resource(OTHER_API_PREFIX).to(player))
-      .default_service(web::to( || HttpResponse::NotFound()))
+      .default_service(web::to(|| HttpResponse::NotFound()))
   })
   .listen(listener)?
   .run();
